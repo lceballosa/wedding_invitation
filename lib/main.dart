@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 
 void main() {
@@ -16,23 +17,57 @@ class WalterLauraApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFb4947d),
+          seedColor: const Color(0xFFC9A8A3),
         ),
-        // Explicit TextTheme with concrete font sizes to avoid apply() issues
-        textTheme: const TextTheme(
-          headlineMedium: TextStyle(fontSize: 28.0, color: Color(0xFF4b3a37)),
-          headlineSmall: TextStyle(fontSize: 22.0, color: Color(0xFF4b3a37)),
-          titleLarge: TextStyle(fontSize: 20.0, color: Color(0xFF4b3a37)),
-          titleMedium: TextStyle(fontSize: 16.0, color: Color(0xFF4b3a37)),
-          bodyLarge: TextStyle(fontSize: 16.0, color: Color(0xFF4b3a37)),
-          bodyMedium: TextStyle(fontSize: 14.0, color: Color(0xFF4b3a37)),
+        // Romantic fonts with elegant styling
+        textTheme: TextTheme(
+          headlineMedium: GoogleFonts.playfairDisplay(
+            fontSize: 32.0,
+            color: const Color(0xFF7A6762),
+            fontWeight: FontWeight.w700,
+            letterSpacing: 2.0,
+          ),
+          headlineSmall: GoogleFonts.playfairDisplay(
+            fontSize: 26.0,
+            color: const Color(0xFF7A6762),
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.5,
+          ),
+          titleLarge: GoogleFonts.cormorantGaramond(
+            fontSize: 24.0,
+            color: const Color(0xFF7A6762),
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.2,
+          ),
+          titleMedium: GoogleFonts.cormorantGaramond(
+            fontSize: 18.0,
+            color: const Color(0xFF7A6762),
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.8,
+          ),
+          bodyLarge: GoogleFonts.cormorantGaramond(
+            fontSize: 18.0,
+            color: const Color(0xFF7A6762),
+            fontWeight: FontWeight.w400,
+            height: 1.6,
+          ),
+          bodyMedium: GoogleFonts.cormorantGaramond(
+            fontSize: 16.0,
+            color: const Color(0xFF7A6762),
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.5,
+            height: 1.5,
+          ),
         ),
-        scaffoldBackgroundColor: const Color(0xFFfbf8f6),
+        scaffoldBackgroundColor: const Color(0xFFFBF7F4),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            textStyle: const TextStyle(fontWeight: FontWeight.w600),
+            textStyle: GoogleFonts.cormorantGaramond(
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.0,
+            ),
           ),
         ),
       ),
@@ -50,12 +85,14 @@ class WeddingInvitationPage extends StatefulWidget {
 }
 
 class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
-  // Romantic color palette
-  static const Color primaryColor = Color(0xFFb4947d);
-  static const Color secondaryColor = Color(0xFFc7a49E);
-  static const Color accentColor = Color(0xFFe4c9b8);
-  static const Color lightColor = Color(0xFFe0d2c7);
+  // Romantic color palette - Soft and warm tones
+  static const Color primaryColor = Color(0xFFC9A8A3);     // Soft taupe-brown
+  static const Color secondaryColor = Color(0xFFDDB8C0);    // Soft rose
+  static const Color accentColor = Color(0xFFF0DCD5);       // Very soft peach
+  static const Color lightColor = Color(0xFFFAF1ED);        // Almost white cream
   static const Color whiteColor = Color(0xFFffffff);
+  static const Color goldAccent = Color(0xFFE8D7C3);        // Soft warm gold
+  static const Color heartColor = Color(0xFFE8BFCD);        // Soft pink
 
   // Google Forms URL for confirmation
   static const String googleFormsUrl =
@@ -98,49 +135,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
     return '${days}d ${hours}h ${minutes}m ${seconds}s';
   }
 
-  // Reusable time box with smooth value transition
-  Widget _buildTimeBox(String label, String value, Color bg, {bool compact = false}) {
-    final valueStyle = Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: whiteColor,
-          fontWeight: FontWeight.w800,
-          fontSize: compact ? 16 : 20,
-        );
-    final labelStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: whiteColor.withOpacity(0.95),
-          fontSize: compact ? 11 : 12,
-        );
 
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: compact ? 8 : 14, horizontal: 8),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [bg, bg.withOpacity(0.85)],
-        ),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.12), blurRadius: 8, offset: const Offset(0, 6)),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 400),
-            transitionBuilder: (child, animation) => FadeTransition(opacity: animation, child: child),
-            child: Text(
-              value,
-              key: ValueKey(value),
-              style: valueStyle,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(label, style: labelStyle),
-        ],
-      ),
-    );
-  }
 
   @override
   void dispose() {
@@ -159,12 +154,50 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
     }
   }
 
+  Widget _buildAgendaItem(BuildContext context, String time, String activity) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: accentColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            time,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color(0xFF5D4D47),
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Text(
+            activity,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color(0xFF6B5A54),
+                  height: 1.5,
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    // responsive header height (cap to avoid excessive height)
-    double headerHeight = screenHeight * 0.50;
-    if (headerHeight > 480) headerHeight = 480;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isMobile = screenWidth < 600;
+    final isTablet = screenWidth >= 600 && screenWidth < 1200;
+    
+    // Responsive header height
+    double headerHeight = screenHeight * 0.45;
+    if (headerHeight > 500) headerHeight = 500;
+    if (isMobile && headerHeight < 300) headerHeight = 300;
 
     return Scaffold(
       body: CustomScrollView(
@@ -207,11 +240,14 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                   SafeArea(
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isMobile ? 30 : 34,
+                          vertical: 12,
+                        ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const SizedBox(height: 14),
+                            const SizedBox(height: 10),
 
                             // Names (scale down if needed)
                             Flexible(
@@ -223,6 +259,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                                         color: whiteColor,
                                         fontWeight: FontWeight.w300,
                                         letterSpacing: 1.6,
+                                        fontSize: isMobile ? 30 : 34,
                                       ),
                                 ),
                               ),
@@ -233,7 +270,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                     color: accentColor,
                                     fontWeight: FontWeight.w300,
-                                    fontSize: 28,
+                                    fontSize: isMobile ? 30 : 34,
                                   ),
                             ),
                             const SizedBox(height: 6),
@@ -246,43 +283,22 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                                         color: whiteColor,
                                         fontWeight: FontWeight.w300,
                                         letterSpacing: 1.6,
+                                        fontSize: isMobile ? 30 : 34,
                                       ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 8),
                             Text(
-                              'Se unen en matrimonio',
+                              'Se unen en matrimonio delante de Dios y sus seres queridos',
+                              textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: lightColor,
+                                    color: whiteColor,
                                     fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: isMobile ? 18 : 22,
                                   ),
                             ),
-                            const SizedBox(height: 14),
-                            // Compact countdown inside header
-                            LayoutBuilder(builder: (context, constraints) {
-                              final days = _timeRemaining.inDays;
-                              final hours = _timeRemaining.inHours.remainder(24);
-                              final minutes = _timeRemaining.inMinutes.remainder(60);
-                              final seconds = _timeRemaining.inSeconds.remainder(60);
-
-                              Widget valueBox(String label, String value, Color bgColor) {
-                                return SizedBox(
-                                  width: (constraints.maxWidth - 48) / 4,
-                                  child: _buildTimeBox(label, value, bgColor, compact: false),
-                                );
-                              }
-
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  valueBox('Días', days.toString(), primaryColor),
-                                  valueBox('Horas', hours.toString().padLeft(2, '0'), secondaryColor),
-                                  valueBox('Min', minutes.toString().padLeft(2, '0'), accentColor),
-                                  valueBox('Seg', seconds.toString().padLeft(2, '0'), lightColor.withOpacity(0.9)),
-                                ],
-                              );
-                            }),
                           ],
                         ),
                       ),
@@ -293,12 +309,184 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
             ),
           ),
 
+          // Countdown Timer Section - Dedicated and Prominent
+          SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.all(isMobile ? 16 : 24),
+              padding: EdgeInsets.all(isMobile ? 20 : 28),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    accentColor.withOpacity(0.8),
+                    accentColor.withOpacity(0.5),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: goldAccent.withOpacity(0.6),
+                  width: 2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryColor.withOpacity(0.2),
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'Faltan',
+                    style: GoogleFonts.playfairDisplay(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 2.0,
+                          fontSize: isMobile ? 32 : 44,
+                        ),
+                  ),
+                  SizedBox(height: isMobile ? 16 : 20),
+                  LayoutBuilder(builder: (context, constraints) {
+                    final days = _timeRemaining.inDays;
+                    final hours = _timeRemaining.inHours.remainder(24);
+                    final minutes = _timeRemaining.inMinutes.remainder(60);
+                    final seconds = _timeRemaining.inSeconds.remainder(60);
+
+                    Widget valueBox(String label, String value, Color bgColor, {Color? accentColor}) {
+                      return Expanded(
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: isMobile ? 16 : 20,
+                                horizontal: isMobile ? 8 : 12,
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    bgColor,
+                                    (accentColor ?? bgColor).withOpacity(0.75),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: bgColor.withOpacity(0.4),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 8),
+                                  ),
+                                  BoxShadow(
+                                    color: bgColor.withOpacity(0.1),
+                                    blurRadius: 24,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    value,
+                                    style: GoogleFonts.playfairDisplay(
+                                          color: whiteColor,
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: isMobile ? 28 : 36,
+                                          letterSpacing: 0.5,
+                                        ),
+                                  ),
+                                  SizedBox(height: isMobile ? 6 : 10),
+                                  Text(
+                                    label,
+                                    style: GoogleFonts.cormorantGaramond(
+                                          color: whiteColor.withOpacity(0.9),
+                                          fontSize: isMobile ? 13 : 16,
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: 1.0,
+                                        ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        valueBox('Días', days.toString(), const Color(0xFFA89080), accentColor: const Color(0xFF967F6F)),
+                        valueBox('Horas', hours.toString().padLeft(2, '0'), const Color(0xFFB8A090), accentColor: const Color(0xFFA68F7F)),
+                        valueBox('Minutos', minutes.toString().padLeft(2, '0'), const Color(0xFFC8B0A0), accentColor: const Color(0xFFB69E8E)),
+                        valueBox('Segundos', seconds.toString().padLeft(2, '0'), const Color(0xFFD8C0B0), accentColor: const Color(0xFFC6AEAE)),
+                      ],
+                    );
+                  }),
+                  SizedBox(height: isMobile ? 16 : 22),
+                  Text(
+                    'para el gran día',
+                    style: GoogleFonts.cormorantGaramond(
+                          color: primaryColor,
+                          fontSize: isMobile ? 18 : 22,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                          fontStyle: FontStyle.italic,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
           // Main content
           SliverPadding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 16 : 24,
+              vertical: isMobile ? 12 : 12,
+            ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                               // Date and Time Section
+                // Bible Verse Section
+                Container(
+                  padding: EdgeInsets.all(isMobile ? 18 : 24),
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: primaryColor.withOpacity(0.2),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: primaryColor.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: isMobile ? 12 : 16),
+                      Text(
+                        '"El amor es sufrido, es benigno; el amor no es celoso, no es jactancioso, no es orgulloso; no es indecoroso, no busca lo suyo, no se irrita, no guarda rencor."\n\n1 Corintios 13:4-5',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: primaryColor,
+                              fontStyle: FontStyle.italic,
+                              height: 1.8,
+                              fontSize: isMobile ? 18 : 22,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Date and Time Section
                 Card(
                   color: accentColor.withOpacity(0.6),
                   child: Padding(
@@ -314,7 +502,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          '26 de Octubre de 2026',
+                          '24 de Octubre de 2026',
                           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 color: primaryColor,
                                 fontWeight: FontWeight.w500,
@@ -325,7 +513,8 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                           '2:30 PM',
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 color: secondaryColor,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w900,
+                                fontSize: isMobile ? 25 : 30,
                               ),
                         ),
                       ],
@@ -364,8 +553,10 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                               ),
                         ),
                         const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        Wrap(
+                          spacing: isMobile ? 8 : 16,
+                          runSpacing: isMobile ? 12 : 16,
+                          alignment: WrapAlignment.center,
                           children: [
                             ElevatedButton.icon(
                               onPressed: () => _launchUrl(mapsUrl),
@@ -374,9 +565,9 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
                                 foregroundColor: whiteColor,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: isMobile ? 12 : 16,
+                                  vertical: isMobile ? 10 : 12,
                                 ),
                               ),
                             ),
@@ -387,9 +578,9 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: secondaryColor,
                                 foregroundColor: whiteColor,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: isMobile ? 12 : 16,
+                                  vertical: isMobile ? 10 : 12,
                                 ),
                               ),
                             ),
@@ -401,9 +592,42 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                 ),
                 const SizedBox(height: 24),
 
+                // Agenda Section
+                Card(
+                  color: accentColor.withOpacity(0.6),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Agenda del Día',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: const Color(0xFF5D4D47),
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                        const SizedBox(height: 20),
+                        // Timeline items
+                        _buildAgendaItem(context, '2:30 p. m.', 'Cóctel de bienvenida'),
+                        const SizedBox(height: 16),
+                        _buildAgendaItem(context, '3:30 p. m.', 'Ceremonia nupcial'),
+                        const SizedBox(height: 16),
+                        _buildAgendaItem(context, '5:20 p. m.', 'Gran entrada, primer baile y brindis'),
+                        const SizedBox(height: 16),
+                        _buildAgendaItem(context, '5:45 p. m.', 'Cena'),
+                        const SizedBox(height: 16),
+                        _buildAgendaItem(context, '6:50 p. m.', 'Corte del pastel y tradiciones'),
+                        const SizedBox(height: 16),
+                        _buildAgendaItem(context, '7:15 p. m.', 'Despedida y salida de los novios'),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+
                 // RSVP Section
                 Container(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(isMobile ? 18 : 24),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -422,6 +646,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: whiteColor,
                               fontWeight: FontWeight.w600,
+                              fontSize: isMobile ? 23 : 29,
                             ),
                       ),
                       const SizedBox(height: 12),
@@ -430,12 +655,13 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: lightColor,
+                              fontSize: isMobile ? 17 : 19,
                             ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: isMobile ? 16 : 20),
                       SizedBox(
                         width: double.infinity,
-                        height: 56,
+                        height: isMobile ? 48 : 56,
                         child: ElevatedButton(
                           onPressed: () => _launchUrl(googleFormsUrl),
                           style: ElevatedButton.styleFrom(
@@ -451,6 +677,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                   color: primaryColor,
                                   fontWeight: FontWeight.w600,
+                                  fontSize: isMobile ? 17 : 19,
                                 ),
                           ),
                         ),
@@ -463,15 +690,17 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                 // Footer message
                 Center(
                   child: Text(
-                    '✨ Esperamos tu presencia ✨',
+                    '¡Te esperamos con los brazos abiertos para celebrar juntos este día tan especial!',
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: primaryColor,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w500,
+                          fontSize: isMobile ? 20 : 25,
                         ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: isMobile ? 20 : 32),
               ]),
             ),
           ),
