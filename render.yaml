@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: wedding-invitation
+    runtime: docker
+    region: ohio
+    plan: free
+    healthCheckPath: /
