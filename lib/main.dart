@@ -41,16 +41,16 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
 
   // Google Forms URL for confirmation
   static const String googleFormsUrl =
-      'https://forms.gle/'; // Replace with actual form URL
+      'https://docs.google.com/forms/d/e/1FAIpQLSe578DgNSzzznacVaxlkA-LVKqoIBOqTPm_vp489M0vZDRpfA/viewform?usp=sharing&ouid=113878454648420136929'; // Replace with actual form URL
 
   // Location coordinates for Hacienda Arkadia in Chia
   static const String mapsUrl =
-      'https://maps.app.goo.gl/'; // Replace with actual location URL
+      'https://maps.app.goo.gl/g2dLLBLfCGgMLL6FA?g_st=iw'; // Replace with actual location URL
   static const String wazeUrl =
-      'https://waze.com/ul/'; // Replace with actual Waze URL
+      'https://waze.com/ul/hd2g7dqggh'; // Replace with actual Waze URL
 
   Future<void> _launchUrl(String url) async {
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('No se pudo abrir el enlace')),
@@ -69,7 +69,8 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
         slivers: [
           // Header with decorative background
           SliverAppBar(
-            expandedHeight: screenHeight * 0.35,
+            // Make header taller (45% of screen height)
+            expandedHeight: screenHeight * 0.8,
             floating: false,
             pinned: true,
             backgroundColor: primaryColor,
@@ -77,53 +78,53 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      primaryColor,
-                      secondaryColor,
-                    ],
+                  image: const DecorationImage(
+                    image: AssetImage('assets/anillo.jpeg'),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Walter Díaz',
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            color: whiteColor,
-                            fontWeight: FontWeight.w300,
-                            letterSpacing: 2,
-                          ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '&',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            color: accentColor,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 28,
-                          ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Laura Ceballos',
-                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                            color: whiteColor,
-                            fontWeight: FontWeight.w300,
-                            letterSpacing: 2,
-                          ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Se unen en matrimonio',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: lightColor,
-                            fontStyle: FontStyle.italic,
-                          ),
-                    ),
-                  ],
+                // overlay a subtle tint so text is readable on the image
+                child: Container(
+                  color: primaryColor.withOpacity(0.28),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Walter Díaz',
+                        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                              color: whiteColor,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 2,
+                            ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '&',
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              color: accentColor,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 28,
+                            ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Laura Ceballos',
+                        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                              color: whiteColor,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 2,
+                            ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Se unen en matrimonio',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: lightColor,
+                              fontStyle: FontStyle.italic,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -143,7 +144,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                   child: Column(
                     children: [
                       Text(
-                        '📅 Fecha y Hora',
+                        'Fecha y Hora',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: primaryColor,
                               fontWeight: FontWeight.w600,
@@ -159,7 +160,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '2:00 PM',
+                        '2:30 PM',
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               color: secondaryColor,
                               fontWeight: FontWeight.w500,
@@ -180,7 +181,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                   child: Column(
                     children: [
                       Text(
-                        '📍 Ubicación',
+                        'Ubicación',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: primaryColor,
                               fontWeight: FontWeight.w600,
@@ -256,7 +257,7 @@ class _WeddingInvitationPageState extends State<WeddingInvitationPage> {
                   child: Column(
                     children: [
                       Text(
-                        '💌 Confirma tu Asistencia',
+                        'Confirma tu Asistencia',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: whiteColor,
                               fontWeight: FontWeight.w600,
