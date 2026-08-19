@@ -363,6 +363,12 @@ class _InvitePageState extends State<_InvitePage> {
                       child: Image.asset(
                         assets[i],
                         fit: BoxFit.cover,
+                        cacheWidth: 400,
+                        cacheHeight: 400,
+                        frameBuilder: (ctx, child, frame, sync) {
+                          if (sync || frame != null) return child;
+                          return Container(color: _surfaceContainerHigh);
+                        },
                         errorBuilder: (_, __, ___) => const Center(
                           child: Icon(Icons.image_not_supported_outlined,
                               color: _textMuted, size: 32)),
@@ -862,7 +868,13 @@ class _InvitePageState extends State<_InvitePage> {
                     topLeft: Radius.circular(9999),
                     topRight: Radius.circular(9999),
                   ),
-                  child: Image.asset(asset, fit: BoxFit.cover),
+                  child: Image.asset(
+                    asset,
+                    fit: BoxFit.cover,
+                    cacheWidth: 600,
+                    errorBuilder: (_, __, ___) =>
+                        Container(color: _surfaceContainerHigh),
+                  ),
                 ),
               ),
             ),
