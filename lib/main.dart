@@ -360,7 +360,13 @@ class _InvitePageState extends State<_InvitePage> {
                     aspectRatio: 1.0,
                     child: Container(
                       color: _surfaceContainerHigh,
-                      child: Image.asset(assets[i], fit: BoxFit.cover),
+                      child: Image.asset(
+                        assets[i],
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Center(
+                          child: Icon(Icons.image_not_supported_outlined,
+                              color: _textMuted, size: 32)),
+                      ),
                     ),
                   ),
                 ),
