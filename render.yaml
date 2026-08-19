@@ -1,6 +1,14 @@
 services:
   - type: static
     name: wedding-invitation
+    buildCommand: >-
+      if [ ! -d "flutter" ]; then
+        git clone https://github.com/flutter/flutter.git -b stable flutter;
+      fi &&
+      export PATH="$PATH:$(pwd)/flutter/bin" &&
+      flutter config --enable-web &&
+      flutter pub get &&
+      flutter build web --no-tree-shake-icons
     staticPublishPath: ./build/web
     routes:
       - path: /*
